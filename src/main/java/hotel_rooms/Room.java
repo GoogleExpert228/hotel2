@@ -1,6 +1,6 @@
-package HotelRooms;
+package hotel_rooms;
 
-import Enums.RoomType;
+import enums.RoomType;
 
 public abstract class Room {
     private int roomNumber;

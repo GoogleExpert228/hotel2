@@ -1,2 +1,8 @@
-package Enums;public enum RoomType {
+package enums;
+
+public enum RoomType {
+    SINGLE,
+    DOUBLE,
+    TRIPLE,
+    LUXURY
 }

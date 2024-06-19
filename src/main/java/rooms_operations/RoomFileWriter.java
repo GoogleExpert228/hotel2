@@ -1,4 +1,6 @@
-package HotelRooms;
+package rooms_operations;
+
+import hotel_rooms.*;
 
 import java.io.FileWriter;
 import java.io.IOException;

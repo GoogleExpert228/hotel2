@@ -1,6 +1,6 @@
-package HotelRooms;
+package hotel_rooms;
 
-import Enums.RoomType;
+import enums.RoomType;
 
 public class LuxuryRoom extends Room {
     public LuxuryRoom(int roomNumber, boolean isAvailable, String note) {

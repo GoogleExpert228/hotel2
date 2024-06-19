@@ -1,0 +1,142 @@
+<hotel>
+<room>
+   <number>101</number>
+   <type>SINGLE</type>
+   <capacity>2</capacity>
+   <available>true</available>
+   <note>new first note</note>
+</room>
+<room>
+   <number>102</number>
+   <type>SINGLE</type>
+   <capacity>2</capacity>
+   <available>true</available>
+   <note>Some default text for the single room!</note>
+</room>
+<room>
+   <number>103</number>
+   <type>SINGLE</type>
+   <capacity>2</capacity>
+   <available>true</available>
+   <note>Some default text for the single room!</note>
+</room>
+<room>
+   <number>104</number>
+   <type>SINGLE</type>
+   <capacity>2</capacity>
+   <available>true</available>
+   <note>Some default text for the single room!</note>
+</room>
+<room>
+   <number>105</number>
+   <type>SINGLE</type>
+   <capacity>2</capacity>
+   <available>true</available>
+   <note>new second note</note>
+</room>
+<room>
+   <number>201</number>
+   <type>DOUBLE</type>
+   <capacity>3</capacity>
+   <available>true</available>
+   <note>Some default text for the double room!</note>
+</room>
+<room>
+   <number>202</number>
+   <type>DOUBLE</type>
+   <capacity>3</capacity>
+   <available>true</available>
+   <note>Some default text for the double room!</note>
+</room>
+<room>
+   <number>203</number>
+   <type>DOUBLE</type>
+   <capacity>3</capacity>
+   <available>true</available>
+   <note>Some default text for the double room!</note>
+</room>
+<room>
+   <number>204</number>
+   <type>DOUBLE</type>
+   <capacity>3</capacity>
+   <available>true</available>
+   <note>Some default text for the double room!</note>
+</room>
+<room>
+   <number>205</number>
+   <type>DOUBLE</type>
+   <capacity>3</capacity>
+   <available>true</available>
+   <note>Some default text for the double room!</note>
+</room>
+<room>
+   <number>301</number>
+   <type>TRIPLE</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the triple room!</note>
+</room>
+<room>
+   <number>302</number>
+   <type>TRIPLE</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the triple room!</note>
+</room>
+<room>
+   <number>303</number>
+   <type>TRIPLE</type>
+   <capacity>5</capacity>
+   <available>false</available>
+   <note>Some default text for the triple room!</note>
+</room>
+<room>
+   <number>304</number>
+   <type>TRIPLE</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the triple room!</note>
+</room>
+<room>
+   <number>305</number>
+   <type>TRIPLE</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the triple room!</note>
+</room>
+<room>
+   <number>401</number>
+   <type>LUXURY</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the luxury room!</note>
+</room>
+<room>
+   <number>402</number>
+   <type>LUXURY</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the luxury room!</note>
+</room>
+<room>
+   <number>403</number>
+   <type>LUXURY</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the luxury room!</note>
+</room>
+<room>
+   <number>404</number>
+   <type>LUXURY</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the luxury room!</note>
+</room>
+<room>
+   <number>405</number>
+   <type>LUXURY</type>
+   <capacity>5</capacity>
+   <available>true</available>
+   <note>Some default text for the luxury room!</note>
+</room>
+</hotel>

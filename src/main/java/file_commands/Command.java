@@ -1,2 +1,5 @@
-package file_commands;public class Command {
+package file_commands;
+
+public interface Command {
+    public void operation();
 }

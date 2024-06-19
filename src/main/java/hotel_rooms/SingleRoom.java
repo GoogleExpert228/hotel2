@@ -1,6 +1,6 @@
-package HotelRooms;
+package hotel_rooms;
 
-import Enums.RoomType;
+import enums.RoomType;
 
 public class SingleRoom extends Room {
 
