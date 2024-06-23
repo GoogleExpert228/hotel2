@@ -2,11 +2,35 @@
 <registrations>
 <registration>
    <number>202</number>
-   <checkInDate>2024-07-10</checkInDate>
+   <checkInDate>2024-07-01</checkInDate>
    <checkOutDate>2024-07-15</checkOutDate>
    <note>Vacation</note>
    <guestsNumber>2</guestsNumber>
 </registration>
+
+   <registration>
+      <number>204</number>
+      <checkInDate>2024-07-01</checkInDate>
+      <checkOutDate>2024-07-15</checkOutDate>
+      <note>Vacation</note>
+      <guestsNumber>2</guestsNumber>
+   </registration>
+
+   <registration>
+      <number>201</number>
+      <checkInDate>2024-07-01</checkInDate>
+      <checkOutDate>2024-07-10</checkOutDate>
+      <note>Vacation</note>
+      <guestsNumber>2</guestsNumber>
+   </registration>
+
+   <registration>
+      <number>205</number>
+      <checkInDate>2024-07-01</checkInDate>
+      <checkOutDate>2024-07-15</checkOutDate>
+      <note>Vacation</note>
+      <guestsNumber>2</guestsNumber>
+   </registration>
 
 <registration>
    <number>104</number>
@@ -39,6 +63,7 @@
    <note>"some</note>
    <guestsNumber>2</guestsNumber>
 </registration>
+
 
 
 </registrations>

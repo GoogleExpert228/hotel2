@@ -82,4 +82,12 @@
 </registration>
 
 
+<registration>
+   <number>303</number>
+   <checkInDate>2024-07-06</checkInDate>
+   <checkOutDate>2024-07-12</checkOutDate>
+   <note>asdasd</note>
+   <guestsNumber>1</guestsNumber>
+</registration>
+
 </registrations>

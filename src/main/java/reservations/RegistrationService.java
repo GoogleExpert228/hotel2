@@ -27,9 +27,6 @@ public class RegistrationService {
 
             // Check if the room is unavailable during the registration period
             for (UnavailableRoom room : unavailableRooms) {
-                System.out.println("Unavailable Room: " + room.getRoomNumber());
-                System.out.println("Start Date: " + room.getStartDate() + ", End Date: " + room.getEndDate());
-
                 boolean isSameRoom = room.getRoomNumber() == registration.getRoomNumber();
                 boolean isOverlap = !(registrationEndDate.isBefore(room.getStartDate()) || registrationStartDate.isAfter(room.getEndDate()));
 
@@ -41,31 +38,36 @@ public class RegistrationService {
             }
 
             // Handle the registrations file
-            StringBuilder contentRegistrations = handleFile(new File(REGISTRATIONS_FILE), reservationXML);
+            StringBuilder contentRegistrations = handleFile(new File(REGISTRATIONS_FILE), reservationXML, registration);
             if (contentRegistrations == null) {
-                return; // If an error occurred or duplicate reservation was found, exit the method
+                return; // If an error occurred or duplicate registration was found, exit the method
             }
 
             // Handle the history file
-            StringBuilder contentHistory = handleFile(new File(HISTORY_FILE), reservationXML);
+            StringBuilder contentHistory = handleFile(new File(HISTORY_FILE), reservationXML, registration);
             if (contentHistory == null) {
-                return; // If an error occurred or duplicate reservation was found, exit the method
+                return; // If an error occurred or duplicate registration was found, exit the method
             }
 
-            // Write the updated content back to the registrations file
-            writeToFile(new File(REGISTRATIONS_FILE), contentRegistrations);
+            if (registration.getGuestsNumber() <= RoomEditor.getRoomByNumber(registration.getRoomNumber()).getRoomCapacity()) {
+                // Write the updated content back to the registrations file
+                writeToFile(new File(REGISTRATIONS_FILE), contentRegistrations);
 
-            // Write the updated content back to the history file
-            writeToFile(new File(HISTORY_FILE), contentHistory);
-            System.out.println("Registration for room " + registration.getRoomNumber() + " has been checked in.");
-            RoomEditor.editRoom(registration.getRoomNumber(), false);
+                // Write the updated content back to the history file
+                writeToFile(new File(HISTORY_FILE), contentHistory);
+                System.out.println("Registration for room " + registration.getRoomNumber() + " has been checked in.");
+                RoomEditor.editRoom(registration.getRoomNumber(), false);
+            } else {
+                System.out.println("The capacity of the room is less than the number of settled persons");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    private static StringBuilder handleFile(File file, String reservationXML) throws IOException {
+    private static StringBuilder handleFile(File file, String reservationXML, Registration newRegistration) throws IOException {
         StringBuilder content = new StringBuilder();
         boolean isFileNew = !file.exists();
 
@@ -84,10 +86,18 @@ public class RegistrationService {
 
             reader.close();
 
-            // Check if the reservation already exists
-            if (content.indexOf(reservationXML) != -1) {
-                System.out.println("Duplicate reservation. Not adding to file.");
-                return null;
+            // Check if the registration already exists for the same room number and overlapping dates
+            List<Registration> existingRegistrations = RegistrationParser.parseRegistrations(file.getAbsolutePath());
+            for (Registration existingRegistration : existingRegistrations) {
+                boolean isSameRoom = existingRegistration.getRoomNumber() == newRegistration.getRoomNumber();
+                boolean isOverlap = !(newRegistration.getCheckOutDate().isBefore(existingRegistration.getCheckInDate()) ||
+                        newRegistration.getCheckInDate().isAfter(existingRegistration.getCheckOutDate()));
+
+                if (isSameRoom && isOverlap) {
+                    System.out.println("Duplicate registration for room " + newRegistration.getRoomNumber() + " from " +
+                            existingRegistration.getCheckInDate() + " to " + existingRegistration.getCheckOutDate() + ".");
+                    return null;
+                }
             }
 
             // If insideRootElement is false, it means the XML structure is corrupted

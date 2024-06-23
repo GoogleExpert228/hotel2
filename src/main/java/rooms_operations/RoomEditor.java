@@ -1,9 +1,12 @@
 package rooms_operations;
 
+import hotel_rooms.Room;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomEditor {
@@ -22,7 +25,7 @@ public class RoomEditor {
                 }
             }
             Files.write(path, lines);
-           // System.out.println("Room " + roomNumber + " edited successfully.");
+            // System.out.println("Room " + roomNumber + " edited successfully.");
         } catch (IOException e) {
             System.out.println("An error occurred while editing room " + roomNumber + ": " + e.getMessage());
         }
@@ -45,5 +48,16 @@ public class RoomEditor {
         } catch (IOException e) {
             System.out.println("An error occurred while editing room " + roomNumber + ": " + e.getMessage());
         }
+    }
+
+    public static Room getRoomByNumber(int roomNumber) {
+        List<Room> rooms = ExtractRooms.parseRooms("rooms.xml");
+
+        for (Room room : rooms) {
+            if (room.getRoomNumber() == roomNumber)
+                return room;
+        }
+
+        return null;
     }
 }

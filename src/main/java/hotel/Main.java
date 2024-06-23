@@ -1,6 +1,7 @@
 package hotel;
 
 import additional_commands.Report;
+import additional_commands.RoomFinder;
 import additional_commands.UnavailableRoom;
 import additional_commands.UnavailableRoomService;
 import hotel_rooms.*;
@@ -61,7 +62,6 @@ public class Main {
             if (commandArguments[0].equalsIgnoreCase("open") && commandArguments.length == 2) {
                 currentFile = commandArguments[1];
                 if (new java.io.File(currentFile).exists()) {
-                    System.out.println("File exists");
                     Command openFileCommand = new OpenFileCommand(currentFile);
                     openFileCommand.operation();
                     isFileOpen = true;
@@ -144,10 +144,14 @@ public class Main {
 
                     case "find":
                         if (commandArguments.length == 4) {
-                            int beds = Integer.parseInt(commandArguments[1]);
-                            LocalDate from = LocalDate.parse(commandArguments[2]);
-                            LocalDate to = LocalDate.parse(commandArguments[3]);
-                            // RoomService.findRoom(beds, from, to);
+                            try {
+                                int beds = Integer.parseInt(commandArguments[1]);
+                                LocalDate fromDate = LocalDate.parse(commandArguments[2]);
+                                LocalDate toDate = LocalDate.parse(commandArguments[3]);
+                                Room room = RoomFinder.findRoom(beds, fromDate, toDate);
+                            } catch (DateTimeParseException e) {
+                                System.out.println("Invalid date format. Please enter dates in the format yyyy-MM-dd.");
+                            }
                         } else {
                             System.out.println("Invalid command. Usage: find <beds> <from> <to>");
                         }
