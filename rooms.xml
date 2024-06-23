@@ -10,7 +10,7 @@
    <number>102</number>
    <type>SINGLE</type>
    <capacity>2</capacity>
-   <available>true</available>
+   <available>false</available>
    <note>Some default text for the single room!</note>
 </room>
 <room>

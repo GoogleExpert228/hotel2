@@ -12,9 +12,9 @@ public class OpenFileCommand extends FileCommand {
     public void operation() {
         File fileForClosing = new File(getFileName());
         if (fileForClosing.exists()) {
-            System.out.println("File exists");
+            System.out.println("File successfully open!");
             readWhenOpen(getFileName());
-            System.out.println(contentWhenFileOpening.toString());
+          //  System.out.println(contentWhenFileOpening.toString());
         } else
             System.out.println("File not found");
     }

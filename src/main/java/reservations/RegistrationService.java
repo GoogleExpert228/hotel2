@@ -1,8 +1,11 @@
 package reservations;
 
+import additional_commands.UnavailableRoom;
+import additional_commands.UnavailableRoomsParser;
 import rooms_operations.RoomEditor;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.List;
 
 public class RegistrationService {
@@ -15,8 +18,28 @@ public class RegistrationService {
 
     public static void checkIn(Registration registration) {
         String reservationXML = registration.toXML();
+        LocalDate registrationStartDate = registration.getCheckInDate();
+        LocalDate registrationEndDate = registration.getCheckOutDate();
 
         try {
+            // Load unavailable rooms
+            List<UnavailableRoom> unavailableRooms = UnavailableRoomsParser.parseUnavailableRooms("unavailable.xml");
+
+            // Check if the room is unavailable during the registration period
+            for (UnavailableRoom room : unavailableRooms) {
+                System.out.println("Unavailable Room: " + room.getRoomNumber());
+                System.out.println("Start Date: " + room.getStartDate() + ", End Date: " + room.getEndDate());
+
+                boolean isSameRoom = room.getRoomNumber() == registration.getRoomNumber();
+                boolean isOverlap = !(registrationEndDate.isBefore(room.getStartDate()) || registrationStartDate.isAfter(room.getEndDate()));
+
+                if (isSameRoom && isOverlap) {
+                    System.out.println("Room " + registration.getRoomNumber() + " is unavailable from " +
+                            room.getStartDate() + " to " + room.getEndDate() + ". Note: " + room.getNote());
+                    return;
+                }
+            }
+
             // Handle the registrations file
             StringBuilder contentRegistrations = handleFile(new File(REGISTRATIONS_FILE), reservationXML);
             if (contentRegistrations == null) {
@@ -40,6 +63,7 @@ public class RegistrationService {
             e.printStackTrace();
         }
     }
+
 
     private static StringBuilder handleFile(File file, String reservationXML) throws IOException {
         StringBuilder content = new StringBuilder();
