@@ -1,46 +1,14 @@
 package hotel;
 
-import additional_commands.Report;
-import additional_commands.RoomFinder;
-import additional_commands.UnavailableRoom;
-import additional_commands.UnavailableRoomService;
+import additional_commands.*;
 import hotel_rooms.*;
 import file_commands.*;
 import reservations.Registration;
-import reservations.RegistrationParser;
 import reservations.RegistrationService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-
-import static rooms_operations.ExtractRooms.parseRooms;
-
-class SomeClass {
-    private static List<Registration> registrationList = RegistrationParser.parseRegistrations("registrations.xml");
-    private static List<Integer> roomsNumber = new ArrayList<>();
-
-    public static void operation(LocalDate checkDate) {
-        List<Room> rooms = parseRooms("rooms.xml");
-
-        roomsNumber.clear();
-
-        for (Registration registration : registrationList) {
-            if (checkDate.isAfter(registration.getCheckInDate().minusDays(0)) &&
-                    checkDate.isBefore(registration.getCheckOutDate().plusDays(0))) {
-                roomsNumber.add(registration.getRoomNumber());
-            }
-        }
-
-        for (Room room : rooms) {
-            if (!(roomsNumber.contains((room.getRoomNumber())))) {
-                System.out.println(room.toString());
-            }
-        }
-    }
-}
 
 public class Main {
     public static void main(String[] args) {
@@ -61,6 +29,10 @@ public class Main {
 
             if (commandArguments[0].equalsIgnoreCase("open") && commandArguments.length == 2) {
                 currentFile = commandArguments[1];
+                if (!currentFile.equals("registrations.xml") && !currentFile.equals("unavailability.xml") && !currentFile.equals("history.xml")) {
+                    System.out.println("You can only open the following files: registrations.xml, unavailability.xml, history.xml");
+                    continue;
+                }
                 if (new java.io.File(currentFile).exists()) {
                     Command openFileCommand = new OpenFileCommand(currentFile);
                     openFileCommand.operation();
@@ -116,19 +88,27 @@ public class Main {
                         break;
 
                     case "availability":
+                        if (!"registrations.xml".equals(currentFile)) {
+                            System.out.println("Please open the registrations.xml file to use the availability command.");
+                            break;
+                        }
                         if (commandArguments.length == 2) {
                             try {
                                 LocalDate date = LocalDate.parse(commandArguments[1]);
-                                SomeClass.operation(date);
+                                Availability.operation(date);
                             } catch (DateTimeParseException e) {
                                 System.out.println("Invalid date format. Please enter dates in the format yyyy-MM-dd.");
                             }
                         } else {
-                            SomeClass.operation(LocalDate.now());
+                            Availability.operation(LocalDate.now());
                         }
                         break;
 
                     case "report":
+                        if (!"history.xml".equals(currentFile)) {
+                            System.out.println("Please open the history.xml file to use the report command.");
+                            break;
+                        }
                         if (commandArguments.length == 3) {
                             try {
                                 LocalDate from = LocalDate.parse(commandArguments[1]);
@@ -143,6 +123,10 @@ public class Main {
                         break;
 
                     case "find":
+                        if (!"registrations.xml".equals(currentFile)) {
+                            System.out.println("Please open the registrations.xml file to use the find command.");
+                            break;
+                        }
                         if (commandArguments.length == 4) {
                             try {
                                 int beds = Integer.parseInt(commandArguments[1]);
@@ -158,13 +142,21 @@ public class Main {
                         break;
 
                     case "unavailable":
+                        if (!"unavailability.xml".equals(currentFile)) {
+                            System.out.println("Please open the unavailability.xml file to use the unavailable command.");
+                            break;
+                        }
                         if (commandArguments.length == 5) {
-                            int room = Integer.parseInt(commandArguments[1]);
-                            LocalDate from = LocalDate.parse(commandArguments[2]);
-                            LocalDate to = LocalDate.parse(commandArguments[3]);
-                            String note = commandArguments[4];
-                            UnavailableRoom unavailableRoom = new UnavailableRoom(room, from, to, note);
-                            UnavailableRoomService.makeUnavailable(unavailableRoom);
+                            try {
+                                int room = Integer.parseInt(commandArguments[1]);
+                                LocalDate from = LocalDate.parse(commandArguments[2]);
+                                LocalDate to = LocalDate.parse(commandArguments[3]);
+                                String note = commandArguments[4];
+                                UnavailableRoom unavailableRoom = new UnavailableRoom(room, from, to, note);
+                                UnavailableRoomService.makeUnavailable(unavailableRoom);
+                            } catch (DateTimeParseException e) {
+                                System.out.println("Invalid date format. Please enter dates in the format yyyy-MM-dd.");
+                            }
                         } else {
                             System.out.println("Invalid command. Usage: unavailable <room> <from> <to> <note>");
                         }
